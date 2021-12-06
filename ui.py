@@ -543,54 +543,61 @@ class T4Train(QtWidgets.QMainWindow):
                 text_str="Current Prediction: {}".format(np.load(tmp_path+'prediction.npy')[0])
                 self.footer.setText(text_str)
                 #print("Keys =", Keys)
-                if "Keys" in text_str:
-                    Keys += 1
+                if "keys" in text_str:
+                    #Keys += 1
                     #print("Keys =",Keys)
-                    if "Keys" not in self.stuff:
-                        self.stuff.append("Keys")
+                    # if "Keys" not in self.stuff:
+                    self.stuff.append("Keys")
                     print(self.stuff)
                     print("-----WWWWWW")
-                elif "Glasses" in text_str:
+                elif "glasses" in text_str:
                     #os.system("python Bubble.py")
-                    Glasses = Glasses + 1
-                    if "Glasses" not in self.stuff:
-                        self.stuff.append("Glasses")
+                    # Glasses = Glasses + 1
+                    # if "Glasses" not in self.stuff:
+                    self.stuff.append("Glasses")
                     print(self.stuff)
                     print("-----ggggg")
-                elif "Bottle" in text_str:
-                    Bottle = Bottle + 1
-                    if "Bottle" not in self.stuff:
-                        self.stuff.append("Bottle")
+                elif "bottle" in text_str:
+                    # bottle = bottle + 1
+                    print("Line561: Bottle")
+                    #Bottle = Bottle + 1
+                    # if "Bottle" not in self.stuff:
+                    self.stuff.append("Bottle")
                     print(self.stuff)
                     print("-----kkkk")
                 elif "Phone" in text_str:
-                    phone = phone + 1
-                    if "Phone" not in self.stuff:
-                        self.stuff.append("Phone")
+                    # phone = phone + 1
+                    # if "Phone" not in self.stuff:
+                    self.stuff.append("Phone")
                     print(self.stuff)
                     print("-----ppppp")
-                print(self.stuff)
-                if len(self.stuff) > 0:
-                    print("---------In length of stuff")
-                    if len(self.stuff) == 1:
-                        print("++++++", len(self.stuff))
-                        text1["text"] = "1." + "    " + self.stuff[-1]
-                        window1.update()
-                    elif len(self.stuff) == 2:
-                        text2["text"] = "2." + "    " + self.stuff[-1]
-                        window1.update()
-                    elif len(self.stuff) == 3:
-                        text3["text"] = "3." + "  " + self.stuff[-1]
-                        window1.update()
-                    elif len(self.stuff) == 4:
-                        text4["text"] = "4." + "    " + self.stuff[-1]
-                        window1.update()
-                if keyboard.is_pressed('z'):
+                elif "no_touch" in text_str:
+                    print("reset list")
                     self.stuff = []
+                    print(self.stuff)
+                print(self.stuff)
+
+                if len(self.stuff) > 0:
+                #     #print("---------In length of stuff")
+                #     if len(self.stuff) == 1:
+                #         print("++++++", len(self.stuff))
+                    text1["text"] = "1." + "    " + self.stuff[0]
+                    window1.update()
+                #     elif len(self.stuff) == 2:
+                #         text2["text"] = "2." + "    " + self.stuff[-1]
+                #         window1.update()
+                #     elif len(self.stuff) == 3:
+                #         text3["text"] = "3." + "  " + self.stuff[-1]
+                #         window1.update()
+                #     elif len(self.stuff) == 4:
+                #         text4["text"] = "4." + "    " + self.stuff[-1]
+                #         window1.update()
+                if keyboard.is_pressed('z'):
+                    # self.stuff = []
                     text1["text"] = "1." + "    "
-                    text2["text"] = "2." + "    "
-                    text3["text"] = "3." + "    "
-                    text4["text"] = "4." + "    "
+                    # text2["text"] = "2." + "    "
+                    # text3["text"] = "3." + "    "
+                    # text4["text"] = "4." + "    "
                     window1.update()
                 return text_str
             except Exception as e:

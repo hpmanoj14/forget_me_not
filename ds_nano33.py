@@ -236,16 +236,16 @@ def read_once(s):
             # print("line 231",test_data_array_merge.shape)
             # # np.save(tmp_path+"tmp_frame_merge.npy", test_data_array_merge)
             #
-            test_data_delta = test_data_array_merge; #removing DC gain
+            test_data_delta = test_data_array_merge #removing DC gain
             test_data_delta_abs = abs(test_data_delta)
             # print("line 237", test_data_delta_abs[0].shape)
-            window_test = np.ones(1500)
+            window_test = np.ones(100)
             # print("line 247",window.shape, test_data_delta_abs[0].shape)
             # print("line 249", test_data_delta_abs[0].shape)
-            moving_avg_test = np.convolve(test_data_delta_abs[0],window_test,'valid')/1500
+            moving_avg_test = np.convolve(test_data_delta_abs[0],window_test,'valid')/100
             index_test = np.argmax(moving_avg_test)
             # print("line 243", index_test, moving_avg_test[index_test])
-            imp_signal_test = test_data_array_merge[:,index_test:index_test+1500]
+            imp_signal_test = test_data_array_merge[:,index_test:index_test+100]
             # imp_signal_test = np.append(imp_signal_test, [0,1])
             # print("line 245",imp_signal_test.shape)
 #
@@ -276,14 +276,14 @@ def read_once(s):
                     # print("line 243",training_data_array_merge.shape)
                     training_data_delta = training_data_array_merge; #removing DC gain
                     training_data_delta_abs = abs(training_data_delta)
-                    window = np.ones(1500)
+                    window = np.ones(100)
                     # print("line 247",window.shape, training_data_delta_abs[0].shape)
                     # training_test = training_data_delta_abs[0].reshape(1,13500)
                     # print("line 249", training_test.shape)
-                    moving_avg = np.convolve(training_data_delta_abs[0],window,'valid')/1500
+                    moving_avg = np.convolve(training_data_delta_abs[0],window,'valid')/100
                     index = np.argmax(moving_avg)
                     print("line 252", index, moving_avg[index])
-                    imp_signal = training_data_array_merge[:,index:index+1500]
+                    imp_signal = training_data_array_merge[:,index:index+100]
                     # imp_signal = np.append(imp_signal, [0,1])
                     print("line 254",imp_signal.shape)
                     imp_signal = np.expand_dims(imp_signal, axis=0)

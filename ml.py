@@ -177,6 +177,7 @@ def feature_importances():
     X_train=np.array(X_train)[:, :, 0]
     Y_train=np.array(Y_train)
 
+    # print("ml.py line 180", X_train.shape, Y_train.shape)
     le=preprocessing.LabelEncoder()
     le.fit(Y_train)
     Y_train=le.transform(Y_train)
@@ -270,11 +271,15 @@ def ml_train():
         for j in range(0, np.shape(training_data)[1]):
             tmptrain = training_data[i, j, :, :] # cut out columns with channel indices
             tmptrain = utils.featurize(tmptrain, featurization_type=feat, numbins=NUM_BINS, sample_rate=SAMPLE_RATE)
+
             X_train.append(tmptrain)
             Y_train.append(training_labels[i])
 
     X_train=np.array(X_train)[:, :, 0]
     Y_train=np.array(Y_train)
+
+    print("training fft",X_train.shape,Y_train.shape)
+    np.save(tmp_path+"X_train_fft.npy", X_train)
 
     # print(X_train.shape)
     # print(Y_train.shape)
@@ -315,11 +320,19 @@ def ml_main():
 
         # Cut out columns with channel indices
         X_test=X_test[:,:]
+        X_test1 = X_test
 
         X_test=utils.featurize(X_test, featurization_type=feat_from_last_train, numbins=NUM_BINS, sample_rate=SAMPLE_RATE)
-
+        # print(X_test.shape)
         # write prediction to file
         prediction=le.inverse_transform(model.predict(X_test.T))
+        print("ml.py-prediction",prediction[0])
+        if(prediction[0])=='bottle':
+            np.save(tmp_path+"bottle.npy", X_test)
+
+        if(prediction[0])=='keys':
+            np.save(tmp_path+"keys.npy", X_test)
+        #     counter = counter+1
         np.save(tmp_path+'prediction', np.array(prediction))
 
 if __name__=="__main__":
@@ -369,6 +382,7 @@ if __name__=="__main__":
     global is_training, is_inferencing
     global model, algos
     global algo, mode
+
 
     is_training   =False
     is_inferencing=False
