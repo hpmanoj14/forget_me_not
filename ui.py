@@ -581,10 +581,10 @@ class T4Train(QtWidgets.QMainWindow):
 
                 if (len(self.stuff) > 0 and self.keys == 1 and self.flag ==1):
                     if (self.stuff[0] == "Bottle"):
-                        text2["text"] = "2." + "Bottle"
+                        text2["text"] = "2." + "  Bottle"
                 elif(len(self.stuff) > 0 and self.bottle == 1 and self.flag ==1):
                     if (self.stuff[0] == "Keys"):
-                        text2["text"] = "2." + "Keys"
+                        text2["text"] = "2." + "  Keys"
                 elif (len(self.stuff) > 0 and self.flag ==0):
                     text1["text"] = "1." + "    " + self.stuff[0]
                     if (self.stuff[0] == "Bottle"):
@@ -592,8 +592,9 @@ class T4Train(QtWidgets.QMainWindow):
                     elif(self.stuff[0] == "Keys"):
                         self.keys =1
                     self.flag = 1
-                    self.stuff = []
+                    
                     window1.update()
+                    self.stuff = []
                 #     elif len(self.stuff) == 2:
                 #         text2["text"] = "2." + "    " + self.stuff[-1]
                 #         window1.update()
