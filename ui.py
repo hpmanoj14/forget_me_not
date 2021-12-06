@@ -535,6 +535,7 @@ class T4Train(QtWidgets.QMainWindow):
         bottle = 0
         phone=0
         keys = 0
+        flag = 0
         """Write prediction."""
         if self.is_predicting:
             #print("In predicting")
@@ -577,15 +578,16 @@ class T4Train(QtWidgets.QMainWindow):
                     print(self.stuff)
                 print(self.stuff)
 
-                if (len(self.stuff) > 0 and keys == 1):
-                    text2["text"] = "2." + "Bottle"
-                elif(len(self.stuff) > 0 and bottle == 1):
-                    text2["text"] = "2." + "Keys"
+                if (len(self.stuff) > 0 and keys == 1 and flag ==1):
+                    if (self.stuff[0] == "Bottle"):
+                        text2["text"] = "2." + "Bottle"
+                elif(len(self.stuff) > 0 and bottle == 1 and flag ==1):
+                    if (self.stuff[0] == "Keys"):
+                        text2["text"] = "2." + "Keys"
                 elif len(self.stuff) > 0:
-                #     #print("---------In length of stuff")
-                #     if len(self.stuff) == 1:
-                #         print("++++++", len(self.stuff))
                     text1["text"] = "1." + "    " + self.stuff[0]
+                    flag = 1
+                    self.stuff = []
                     window1.update()
                 #     elif len(self.stuff) == 2:
                 #         text2["text"] = "2." + "    " + self.stuff[-1]
@@ -597,7 +599,7 @@ class T4Train(QtWidgets.QMainWindow):
                 #         text4["text"] = "4." + "    " + self.stuff[-1]
                 #         window1.update()
                 if keyboard.is_pressed('z'):
-                    # self.stuff = []
+                    self.stuff = []
                     text1["text"] = "1." + "    "
                     text2["text"] = "2." + "    "
                     # text3["text"] = "3." + "    "
@@ -605,6 +607,7 @@ class T4Train(QtWidgets.QMainWindow):
                     window1.update()
                     bottle =0
                     keys =0
+                    flag = 0
                 return text_str
             except Exception as e:
                 return
