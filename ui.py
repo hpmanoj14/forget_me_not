@@ -131,6 +131,10 @@ class T4Train(QtWidgets.QMainWindow):
         uic.loadUi("ui_assets/ui_qtview.ui", self)
         self.show()
         self.stuff = []
+        self.bottle = 0
+        self.phone=0
+        self.keys = 0
+        self.flag = 0
 
         # Delete any existing files from a previous session, in tmp folder
         utils.delete_files_ending_in([".npy", ".txt", ".png", ".wav"])
@@ -145,7 +149,7 @@ class T4Train(QtWidgets.QMainWindow):
                                             shell=True)
 
         # DVS: how do we do this?
-        # Set flag to clear fps buffer during setup
+        # Set self.flag to clear fps buffer during setup
         self.fps_tracker_ready=False
 
 
@@ -532,10 +536,7 @@ class T4Train(QtWidgets.QMainWindow):
 
     def update_prediction(self, *args):
         global tmp_path
-        bottle = 0
-        phone=0
-        keys = 0
-        flag = 0
+
         """Write prediction."""
         if self.is_predicting:
             #print("In predicting")
@@ -544,7 +545,7 @@ class T4Train(QtWidgets.QMainWindow):
                 self.footer.setText(text_str)
                 #print("Keys =", Keys)
                 if "keys" in text_str:
-                    keys = 1
+                    self.keys = 1
                     #print("Keys =",Keys)
                     # if "Keys" not in self.stuff:
                     self.stuff.append("Keys")
@@ -558,16 +559,16 @@ class T4Train(QtWidgets.QMainWindow):
                     print(self.stuff)
                     print("-----ggggg")
                 elif "bottle" in text_str:
-                    # bottle = bottle + 1
+                    # self.bottle = self.bottle + 1
                     print("Line561: Bottle")
                     #Bottle = Bottle + 1
                     # if "Bottle" not in self.stuff:
                     self.stuff.append("Bottle")
-                    bottle = 1
+                    self.bottle = 1
                     print(self.stuff)
                     print("-----kkkk")
                 elif "Phone" in text_str:
-                    # phone = phone + 1
+                    # self.phone = self.phone + 1
                     # if "Phone" not in self.stuff:
                     self.stuff.append("Phone")
                     print(self.stuff)
@@ -578,15 +579,15 @@ class T4Train(QtWidgets.QMainWindow):
                     print(self.stuff)
                 print(self.stuff)
 
-                if (len(self.stuff) > 0 and keys == 1 and flag ==1):
+                if (len(self.stuff) > 0 and self.keys == 1 and self.flag ==1):
                     if (self.stuff[0] == "Bottle"):
                         text2["text"] = "2." + "Bottle"
-                elif(len(self.stuff) > 0 and bottle == 1 and flag ==1):
+                elif(len(self.stuff) > 0 and self.bottle == 1 and self.flag ==1):
                     if (self.stuff[0] == "Keys"):
                         text2["text"] = "2." + "Keys"
-                elif (len(self.stuff) > 0 and flag ==0):
+                elif (len(self.stuff) > 0 and self.flag ==0):
                     text1["text"] = "1." + "    " + self.stuff[0]
-                    flag = 1
+                    self.flag = 1
                     self.stuff = []
                     window1.update()
                 #     elif len(self.stuff) == 2:
@@ -605,9 +606,9 @@ class T4Train(QtWidgets.QMainWindow):
                     # text3["text"] = "3." + "    "
                     # text4["text"] = "4." + "    "
                     window1.update()
-                    bottle =0
-                    keys =0
-                    flag = 0
+                    self.bottle =0
+                    self.keys =0
+                    self.flag = 0
                     self.stuff = []
                 return text_str
             except Exception as e:
