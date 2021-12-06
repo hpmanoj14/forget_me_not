@@ -575,7 +575,7 @@ class T4Train(QtWidgets.QMainWindow):
                     print("-----ppppp")
                 elif "no_touch" in text_str:
                     print("reset list")
-                    self.stuff = []
+                    # self.stuff = []
                     print(self.stuff)
                 print(self.stuff)
 
@@ -592,8 +592,9 @@ class T4Train(QtWidgets.QMainWindow):
                     elif(self.stuff[0] == "Keys"):
                         self.keys =1
                     self.flag = 1
-                    
+
                     window1.update()
+                if keyboard.is_pressed('x'):
                     self.stuff = []
                 #     elif len(self.stuff) == 2:
                 #         text2["text"] = "2." + "    " + self.stuff[-1]
