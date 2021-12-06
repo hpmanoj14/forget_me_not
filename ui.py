@@ -532,10 +532,9 @@ class T4Train(QtWidgets.QMainWindow):
 
     def update_prediction(self, *args):
         global tmp_path
-        Glasses = 0
+        bottle = 0
         phone=0
         keys = 0
-        Keys = 0
         """Write prediction."""
         if self.is_predicting:
             #print("In predicting")
@@ -544,7 +543,7 @@ class T4Train(QtWidgets.QMainWindow):
                 self.footer.setText(text_str)
                 #print("Keys =", Keys)
                 if "keys" in text_str:
-                    #Keys += 1
+                    keys = 1
                     #print("Keys =",Keys)
                     # if "Keys" not in self.stuff:
                     self.stuff.append("Keys")
@@ -563,6 +562,7 @@ class T4Train(QtWidgets.QMainWindow):
                     #Bottle = Bottle + 1
                     # if "Bottle" not in self.stuff:
                     self.stuff.append("Bottle")
+                    bottle = 1
                     print(self.stuff)
                     print("-----kkkk")
                 elif "Phone" in text_str:
@@ -577,7 +577,11 @@ class T4Train(QtWidgets.QMainWindow):
                     print(self.stuff)
                 print(self.stuff)
 
-                if len(self.stuff) > 0:
+                if (len(self.stuff) > 0 and keys == 1):
+                    text2["text"] = "2." + "Bottle"
+                elif(len(self.stuff) > 0 and bottle == 1):
+                    text2["text"] = "2." + "Keys"
+                elif len(self.stuff) > 0:
                 #     #print("---------In length of stuff")
                 #     if len(self.stuff) == 1:
                 #         print("++++++", len(self.stuff))
@@ -595,10 +599,12 @@ class T4Train(QtWidgets.QMainWindow):
                 if keyboard.is_pressed('z'):
                     # self.stuff = []
                     text1["text"] = "1." + "    "
-                    # text2["text"] = "2." + "    "
+                    text2["text"] = "2." + "    "
                     # text3["text"] = "3." + "    "
                     # text4["text"] = "4." + "    "
                     window1.update()
+                    bottle =0
+                    keys =0
                 return text_str
             except Exception as e:
                 return
