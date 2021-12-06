@@ -584,7 +584,7 @@ class T4Train(QtWidgets.QMainWindow):
                 elif(len(self.stuff) > 0 and bottle == 1 and flag ==1):
                     if (self.stuff[0] == "Keys"):
                         text2["text"] = "2." + "Keys"
-                elif len(self.stuff) > 0:
+                elif (len(self.stuff) > 0 and flag ==0):
                     text1["text"] = "1." + "    " + self.stuff[0]
                     flag = 1
                     self.stuff = []
@@ -608,6 +608,7 @@ class T4Train(QtWidgets.QMainWindow):
                     bottle =0
                     keys =0
                     flag = 0
+                    self.stuff = []
                 return text_str
             except Exception as e:
                 return
