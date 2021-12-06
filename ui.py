@@ -545,7 +545,7 @@ class T4Train(QtWidgets.QMainWindow):
                 self.footer.setText(text_str)
                 #print("Keys =", Keys)
                 if "keys" in text_str:
-                    self.keys = 1
+                    #self.keys = 1
                     #print("Keys =",Keys)
                     # if "Keys" not in self.stuff:
                     self.stuff.append("Keys")
@@ -564,7 +564,7 @@ class T4Train(QtWidgets.QMainWindow):
                     #Bottle = Bottle + 1
                     # if "Bottle" not in self.stuff:
                     self.stuff.append("Bottle")
-                    self.bottle = 1
+                    #self.bottle = 1
                     print(self.stuff)
                     print("-----kkkk")
                 elif "Phone" in text_str:
@@ -587,6 +587,10 @@ class T4Train(QtWidgets.QMainWindow):
                         text2["text"] = "2." + "Keys"
                 elif (len(self.stuff) > 0 and self.flag ==0):
                     text1["text"] = "1." + "    " + self.stuff[0]
+                    if (self.stuff[0] == "Bottle"):
+                        self.bottle =1
+                    elif(self.stuff[0] == "Keys"):
+                        self.keys =1
                     self.flag = 1
                     self.stuff = []
                     window1.update()
