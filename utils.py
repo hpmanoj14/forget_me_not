@@ -10,6 +10,7 @@ Reusable in other py files.
 import os
 import sys
 from sys import platform
+from scipy import signal
 
 import glob
 
@@ -148,7 +149,7 @@ def featurize(input_frame, featurization_type=Featurization.Raw, numbins=60, sam
         reframe = np.reshape(input_frame - input_frame[0], (-1, 1))
         return reframe
 
-    # For feats that do use binning, only flatten after cutting out the 
+    # For feats that do use binning, only flatten after cutting out the
     # samples which do not make up a multiple of numbins
     if len(input_frame.shape) > 1:
         binnable_length = input_frame.shape[1] // numbins * numbins
@@ -157,7 +158,7 @@ def featurize(input_frame, featurization_type=Featurization.Raw, numbins=60, sam
     else:
         binnable_length = input_frame.shape[0] // numbins * numbins # case of only one channel
         input_frame = input_frame[:binnable_length] # cut out non-multiple samples
-    
+
     if featurization_type == Featurization.Variance:
         reframe = np.reshape(input_frame, (numbins,-1))
         reframe = np.reshape(np.var(reframe, axis = 1), (-1, 1))
@@ -197,6 +198,7 @@ def featurize(input_frame, featurization_type=Featurization.Raw, numbins=60, sam
 
         # drop the 0th index representing 0 * fs
         rfft_out = np.sum(np.reshape(rfft_out[:, 1:binnable_length], (numbins, -1)), axis=1)
+        sos = signal.butter(10, 0.1, 'highpass', output='sos')
+        rfft_out = signal.sosfilt(sos,rfft_out)
         rfft_out = np.reshape(rfft_out, (-1, 1))
         return rfft_out
-

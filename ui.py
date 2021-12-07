@@ -135,6 +135,7 @@ class T4Train(QtWidgets.QMainWindow):
         self.phone=0
         self.keys = 0
         self.flag = 0
+        # self.value = time.monotonic()
 
         # Delete any existing files from a previous session, in tmp folder
         utils.delete_files_ending_in([".npy", ".txt", ".png", ".wav"])
@@ -536,6 +537,8 @@ class T4Train(QtWidgets.QMainWindow):
 
     def update_prediction(self, *args):
         global tmp_path
+        self.value = time.monotonic()
+        print("line 541", self.value)
 
         """Write prediction."""
         if self.is_predicting:
@@ -594,7 +597,9 @@ class T4Train(QtWidgets.QMainWindow):
                     self.flag = 1
 
                     window1.update()
-                if keyboard.is_pressed('x'):
+                # print("line 598",self.value)
+                if int(self.value%10)==0:
+                    print(self.value)
                     self.stuff = []
                 #     elif len(self.stuff) == 2:
                 #         text2["text"] = "2." + "    " + self.stuff[-1]
@@ -605,7 +610,7 @@ class T4Train(QtWidgets.QMainWindow):
                 #     elif len(self.stuff) == 4:
                 #         text4["text"] = "4." + "    " + self.stuff[-1]
                 #         window1.update()
-                if keyboard.is_pressed('z'):
+                if int(self.value%30)==0:
                     self.stuff = []
                     text1["text"] = "1." + "    "
                     text2["text"] = "2." + "    "
