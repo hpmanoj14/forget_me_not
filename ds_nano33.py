@@ -93,7 +93,7 @@ def get_serial():
 
         # Not a great idea tbh
         # use_port=ports[0]
-        use_port='COM9'
+        use_port='COM4'
 
     # ubuntu or VM on Windows
     if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):

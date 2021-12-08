@@ -18,7 +18,9 @@ import keyboard
 import tkinter as tk
 from tkinter.constants import GROOVE, RAISED
 from tkinter import *
-
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image
 
 
 from functools import partial
@@ -132,7 +134,7 @@ class T4Train(QtWidgets.QMainWindow):
         self.show()
         self.stuff = []
         self.bottle = 0
-        self.phone=0
+        self.phone = 0
         self.keys = 0
         self.flag = 0
         # self.value = time.monotonic()
@@ -538,7 +540,14 @@ class T4Train(QtWidgets.QMainWindow):
     def update_prediction(self, *args):
         global tmp_path
         self.value = time.monotonic()
-        print("line 541", self.value)
+        keysImage = 'keys.jpg'
+        keysItself = Image.open(keysImage)
+        keysNumpy = np.asarray(keysItself)
+        waterImage = 'waterbottle1.jpg'
+        waterItself = Image.open(waterImage)
+        waterNumpy = np.asarray(waterItself)
+
+        #print("line 541", self.value)
 
         """Write prediction."""
         if self.is_predicting:
@@ -585,20 +594,36 @@ class T4Train(QtWidgets.QMainWindow):
                 if (len(self.stuff) > 0 and self.keys == 1 and self.flag ==1):
                     if (self.stuff[0] == "Bottle"):
                         text2["text"] = "2." + "  Bottle"
+                        plt.imshow(waterNumpy)
+                        plt.draw()
+                        plt.pause(3)
+                        plt.close()
                 elif(len(self.stuff) > 0 and self.bottle == 1 and self.flag ==1):
                     if (self.stuff[0] == "Keys"):
                         text2["text"] = "2." + "  Keys"
+                        plt.imshow(keysNumpy)
+                        plt.draw()
+                        plt.pause(3)
+                        plt.close()
                 elif (len(self.stuff) > 0 and self.flag ==0):
                     text1["text"] = "1." + "    " + self.stuff[0]
                     if (self.stuff[0] == "Bottle"):
                         self.bottle =1
+                        plt.imshow(waterNumpy)
+                        plt.draw()
+                        plt.pause(3)
+                        plt.close()
                     elif(self.stuff[0] == "Keys"):
                         self.keys =1
+                        plt.imshow(keysNumpy)
+                        plt.draw()
+                        plt.pause(3)
+                        plt.close()
                     self.flag = 1
 
                     window1.update()
                 # print("line 598",self.value)
-                if int(self.value%10)==0:
+                if int(self.value%3)==0:
                     print(self.value)
                     self.stuff = []
                 #     elif len(self.stuff) == 2:
@@ -610,7 +635,7 @@ class T4Train(QtWidgets.QMainWindow):
                 #     elif len(self.stuff) == 4:
                 #         text4["text"] = "4." + "    " + self.stuff[-1]
                 #         window1.update()
-                if int(self.value%30)==0:
+                if int(self.value%5)==0:
                     self.stuff = []
                     text1["text"] = "1." + "    "
                     text2["text"] = "2." + "    "
